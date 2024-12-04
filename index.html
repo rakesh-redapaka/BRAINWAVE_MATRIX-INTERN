@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            background-image: url(./BACKGROUND\ PIC.jpg);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .todo-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .todo-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .todo-item .details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .delete-btn {
+            align-self: flex-end;
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .delete-btn:hover {
+            background: #b02a37;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <div class="input-group">
+            <label for="task">Task</label>
+            <input type="text" id="task" placeholder="Enter your task">
+        </div>
+        <div class="input-group">
+            <label for="date">Date</label>
+            <input type="date" id="date">
+        </div>
+        <div class="input-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="Enter location">
+        </div>
+        <button class="add-btn">Add Task</button>
+        <ul class="todo-list"></ul>
+    </div>
+
+    <script>
+        // Select elements
+        const taskInput = document.getElementById('task');
+        const dateInput = document.getElementById('date');
+        const locationInput = document.getElementById('location');
+        const addBtn = document.querySelector('.add-btn');
+        const todoList = document.querySelector('.todo-list');
+
+        // Add a new task
+        addBtn.addEventListener('click', () => {
+            const task = taskInput.value.trim();
+            const date = dateInput.value;
+            const location = locationInput.value.trim();
+
+            if (task !== '' && date !== '' && location !== '') {
+                const li = document.createElement('li');
+                li.className = 'todo-item';
+
+                // Task Details
+                const taskDetails = document.createElement('span');
+                taskDetails.textContent = task;
+
+                // Date and Location Details
+                const details = document.createElement('div');
+                details.className = 'details';
+                details.textContent = `Date: ${date} | Location: ${location}`;
+
+                // Delete Button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.addEventListener('click', () => {
+                    todoList.removeChild(li);
+                });
+
+                // Append elements
+                li.appendChild(taskDetails);
+                li.appendChild(details);
+                li.appendChild(deleteBtn);
+                todoList.appendChild(li);
+
+                // Clear inputs
+                taskInput.value = '';
+                dateInput.value = '';
+                locationInput.value = '';
+            } else {
+                alert('Please fill out all fields.');
+            }
+        });
+    </script>
+</body>
+</html>
